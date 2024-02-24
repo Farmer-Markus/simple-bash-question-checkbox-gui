@@ -83,4 +83,3 @@ fi
 }
 
 #run "gui" for yes/no window
-gui
