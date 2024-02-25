@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#3 button gui
 title="Would you like to update?"
 button1="Yes"
 button2="No"
@@ -14,38 +15,20 @@ button2color="$default"
 button3color="$default"
 
 
+#checkbox gui
+title2="Choose settings."
+button="Save"
 
 gui () {							#GUI START
 widht=$(tput cols)
+												#"$(head -c 10 < /dev/zero | tr '\0' '\43')" generates 10 times "#"
+background=$(head -c $widht < /dev/zero | tr '\0' '\43')
 
+titleground=$(head -c $[ $[ widht-$( echo $title | wc -m) ]/2 ] < /dev/zero | tr '\0' '\43')
 
-background=""
-i=""
-while (( i < $widht )); do
-i=$[i+1]
-background=""$background"#"
-done
+button12ground=$(head -c $[ $[ widht-$[ $( echo $button1 | wc -m)+$( echo $button2 | wc -m ) ] ]/3 ] < /dev/zero | tr '\0' '\43')
 
-titleground=""
-i=""
-while (( i < $[ $[ widht-$( echo $title | wc -m) ]/2 ] )); do
-i=$[i+1]
-titleground="$titleground"#
-done
-
-button12ground=""
-i=""
-while (( i < $[ $[ widht-$[ $( echo $button1 | wc -m)+$( echo $button2 | wc -m ) ] ]/3 ] )); do
-i=$[i+1]
-button12ground="$button12ground"#
-done
-
-button3ground=""
-i=""
-while (( i < $[ $[widht-6]/2 ] )); do
-i=$[i+1]
-button3ground="$button3ground"#
-done
+button3ground=$(head -c $[ $[widht-6]/2 ] < /dev/zero | tr '\0' '\43')
 
 echo -e '\e[10A\e[K'$background'
 '$titleground'\033[;36m'$title'\033[0;38m'$titleground'
@@ -56,9 +39,12 @@ echo -e '\e[10A\e[K'$background'
 '$background'
 '$button3ground''$button3color''$button3'\033[0;38m'$button3ground'
 '$background'
-'$background'\033[0K\r'
+'$background'' #\033[0K\r
 read_input
 }								#GUI END
+
+
+
 
 read_input () {
 escape_char=$(printf "\u1b")
@@ -74,6 +60,9 @@ case $mode in
 esac
 }
 
+
+
+
 output () {
 if [[ ! "$button1color" == "$default" ]];then echo "button 1"
    else
@@ -82,4 +71,27 @@ if [[ ! "$button1color" == "$default" ]];then echo "button 1"
 fi
 }
 
+
 #run "gui" for yes/no window
+
+
+checkbox () {
+widht=$(tput cols)
+
+background=$(head -c $widht < /dev/zero | tr '\0' '\43')
+
+titleground=$(head -c $[ $[ widht-$( echo $title2 | wc -m) ]/2 ] < /dev/zero | tr '\0' '\43')
+
+echo -e '\e[10A\e[K'$background'
+'$titleground'\033[;36m'$title2'\033[0;38m'$titleground'
+'$background'
+'$background'
+'$background''
+
+
+
+
+
+}
+#checkbox
+
